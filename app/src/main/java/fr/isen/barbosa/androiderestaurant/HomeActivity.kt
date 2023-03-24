@@ -18,6 +18,7 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_home)
 
+
         val entree = findViewById<TextView>(R.id.Entrees)
         entree.setOnClickListener {
             Log.d("HomeActivity", "vous avez cliqué sur entrée")
@@ -25,25 +26,26 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, CategoryActivity::class.java)
             intent.putExtra("category",getString(R.string.home_starters))
             startActivity(intent)
-            val categoryName = intent.getStringExtra("Entrees")
         }
+
 
         val plat = findViewById<TextView>(R.id.Plats)
         plat.setOnClickListener {
             Log.d("HomeActivity", "vous avez cliqué sur plats")
             Toast.makeText(this,"vous avez cliqué sur plats", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, CategoryActivity::class.java)
+            intent.putExtra("category", "Plats")
             startActivity(intent)
-            val categoryName = intent.getStringExtra("Plats")
         }
+
 
         val dessert = findViewById<TextView>(R.id.Dessert)
         dessert.setOnClickListener {
             Log.d("HomeActivity", "vous avez cliqué sur Dessert")
             Toast.makeText(this,"vous avez cliqué sur Dessert", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, CategoryActivity::class.java)
+            intent.putExtra("category", "Dessert")
             startActivity(intent)
-            val categoryName = intent.getStringExtra("Dessert")
         }
 
 

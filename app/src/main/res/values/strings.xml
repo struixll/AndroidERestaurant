@@ -1,4 +1,22 @@
 <resources>
     <string name="app_name">AndroidERestaurant</string>
     <string name="home_starters">Entrées</string>
+    <string-array name="liste_plats">
+        <item>Pizza</item>
+        <item>Burger</item>
+        <item>Sushi</item>
+        <item>Spaghetti</item>
+        <item>Salade</item>
+    </string-array>
+
+    <string-array name="description_plats">
+        <item> Le plat indémodable de génération en génération</item>
+        <item> Ce plat vous ramènera au pays de votre enfance</item>
+        <item> C_est une questions de goût et de couleur </item>
+        <item> ou coquillette suivant les chanceux </item>
+        <item> un restaurant qui propose un plat peu calorique pour continuer à suivre votre régime</item>
+
+
+    </string-array>
+
 </resources>
