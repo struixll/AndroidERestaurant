@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -21,12 +20,16 @@ import fr.isen.barbosa.androiderestaurant.model.Items
 class CategoryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCategoryBinding
+    private lateinit var category : String
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.CategoryTitle.text = intent.getStringExtra("category")
+        category = intent.getStringExtra("category")?:""
+        binding.CategoryTitle.text = category
             ?: "" //faire des if pour associer les listes aux diff entrées plats dessert
         //this.title = categoryName
 
@@ -35,13 +38,21 @@ class CategoryActivity : AppCompatActivity() {
         val platList = resources.getStringArray(R.array.liste_plats).toList() as ArrayList
         val platRecyclerView = findViewById<RecyclerView>(R.id.ListePlats)
         platRecyclerView.layoutManager = LinearLayoutManager(this)
-        platRecyclerView.adapter = PlatAdapter(platList)  //platList = dishes
-        startActivity(Intent(this, DetailActivity::class.java))
-        //intent.putExtra(plat : it)
-        getDishFromServer()
+        platRecyclerView.adapter = PlatAdapter(platList){  //platList = dishes
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("detail", it)
+            startActivity(intent)
+        }
 
+
+        //intent.putExtra("plat", it)
+        //startActivity(Intent(this, DetailActivity::class.java))
+
+        getDishFromServer() //appelle la fonction pour faire le lien avec le serveur
 
     }
+
+
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
@@ -54,12 +65,11 @@ class CategoryActivity : AppCompatActivity() {
         val url = "http://test.api.catering.bluecodegames.com/menu"
         val body = JSONObject().apply { put("id_shop", "1") }
         val request = JsonObjectRequest(Request.Method.POST, url, body,
-            { response ->
-                Log.d("CategoryActivity", "ça marche")
-                val data = Gson().fromJson(response.toString(), DataResult::class.java)
-                val platList = data.data[0].items.map { it.categNameFr ?: "" }.toList() as ArrayList
+            {
+                Log.d("CategoryActivity", "ça marche : $it")
+                handleAPIData(it.toString())
             },
-            { error ->
+            {
                 Log.e("CategoryActivity", "ça marche pas")
             }
         )
@@ -69,10 +79,10 @@ class CategoryActivity : AppCompatActivity() {
     }
 
     private fun handleAPIData(data: String) {
-        val dishesResult = Gson().fromJson(data, DataResult::class.java)
-        val dishCategory = dishesResult.data.firstOrNull { it.nameFr == category }
-        val adapter = binding.categoryList.adapter as DishAdapter
-        adapter.refreshList(dishCategory?.items as ArrayList<Items>)
+        val dishesResult = Gson().fromJson(data, DataResult::class.java) //data
+        val dishCategory = dishesResult.data.firstOrNull { it.nameFr == category } //platList
+        val adapter = binding.ListePlats.adapter as PlatAdapter //categoryList = ListePlats
+        adapter.updateDishes(dishCategory?.items?.map { it.nameFr?:""} as ArrayList<String>)
     }
 
 }
