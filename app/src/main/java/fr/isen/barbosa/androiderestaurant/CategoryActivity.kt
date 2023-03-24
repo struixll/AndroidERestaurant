@@ -16,7 +16,7 @@ import fr.isen.barbosa.androiderestaurant.model.DataResult
 import fr.isen.barbosa.androiderestaurant.model.Items
 
 
-@Suppress("DEPRECATION")
+
 class CategoryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCategoryBinding

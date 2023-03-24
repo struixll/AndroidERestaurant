@@ -17,9 +17,6 @@
             android:name=".DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".PlatAdapter"
-            android:exported="false" />
-        <activity
             android:name=".CategoryActivity"
             android:exported="false" />
         <activity
