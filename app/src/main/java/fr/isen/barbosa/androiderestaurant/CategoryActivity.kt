@@ -13,8 +13,6 @@ import com.google.gson.Gson
 import fr.isen.barbosa.androiderestaurant.databinding.ActivityCategoryBinding
 import org.json.JSONObject
 import fr.isen.barbosa.androiderestaurant.model.DataResult
-import fr.isen.barbosa.androiderestaurant.model.Items
-
 
 
 class CategoryActivity : AppCompatActivity() {
@@ -30,7 +28,7 @@ class CategoryActivity : AppCompatActivity() {
         setContentView(binding.root)
         category = intent.getStringExtra("category")?:""
         binding.CategoryTitle.text = category
-            ?: "" //faire des if pour associer les listes aux diff entrées plats dessert
+             //faire des if pour associer les listes aux diff entrées plats dessert
         //this.title = categoryName
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -43,10 +41,6 @@ class CategoryActivity : AppCompatActivity() {
             intent.putExtra("detail", it)
             startActivity(intent)
         }
-
-
-        //intent.putExtra("plat", it)
-        //startActivity(Intent(this, DetailActivity::class.java))
 
         getDishFromServer() //appelle la fonction pour faire le lien avec le serveur
 
@@ -82,7 +76,11 @@ class CategoryActivity : AppCompatActivity() {
         val dishesResult = Gson().fromJson(data, DataResult::class.java) //data
         val dishCategory = dishesResult.data.firstOrNull { it.nameFr == category } //platList
         val adapter = binding.ListePlats.adapter as PlatAdapter //categoryList = ListePlats
-        adapter.updateDishes(dishCategory?.items?.map { it.nameFr?:""} as ArrayList<String>)
+        //adapter.updateDishes(dishCategory?.items?.map { it.nameFr?:""} as ArrayList<String>)
+        dishCategory?.items?.let { items ->
+            val names = items.map { it.nameFr ?: "" }.toMutableList()
+            adapter.updateDishes(names)
+        }
     }
 
 }

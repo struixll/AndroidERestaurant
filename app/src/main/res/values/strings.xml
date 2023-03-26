@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AndroidERestaurant</string>
     <string name="home_starters">Entrées</string>
+    <string name="textview">TextView</string>
     <string-array name="liste_plats">
         <item>Pizza</item>
         <item>Burger</item>

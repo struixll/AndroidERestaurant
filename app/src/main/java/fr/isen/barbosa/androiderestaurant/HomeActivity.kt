@@ -44,7 +44,7 @@ class HomeActivity : AppCompatActivity() {
             Log.d("HomeActivity", "vous avez cliqué sur Dessert")
             Toast.makeText(this,"vous avez cliqué sur Dessert", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, CategoryActivity::class.java)
-            intent.putExtra("category", "Dessert")
+            intent.putExtra("category", "Desserts")
             startActivity(intent)
         }
 
