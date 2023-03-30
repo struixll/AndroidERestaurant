@@ -22,13 +22,13 @@ class CategoryActivity : AppCompatActivity() {
     private lateinit var category : String
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
         category = intent.getStringExtra("category")?:""
         binding.CategoryTitle.text = category

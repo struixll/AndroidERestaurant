@@ -3,6 +3,7 @@ package fr.isen.barbosa.androiderestaurant
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager
 import fr.isen.barbosa.androiderestaurant.databinding.ActivityDetailBinding
 import fr.isen.barbosa.androiderestaurant.model.Items
 
@@ -26,11 +27,10 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.title=title
         //val ingredients = item.ingredients ?:""
 
-
-        //val viewPager = findViewById<ViewPager>(R.id.imageDetail)
-
-        //val leCarrouselAdapter = CarrouselAdapter(this, this.item.images)
-        //viewPager.adapter = leCarrouselAdapter
+        //appel du Carrousel
+        val viewPager = findViewById<ViewPager>(R.id.imageDetail)
+        val leCarrouselAdapter = CarrouselAdapter(this, this.item.images)
+        viewPager.adapter = leCarrouselAdapter
 
 
 

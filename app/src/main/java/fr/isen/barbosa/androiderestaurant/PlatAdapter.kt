@@ -51,11 +51,6 @@ class PlatAdapter(private var platList: ArrayList<Items>, val onClickListener: (
 
 
     fun updateDishes(platListFromApi: ArrayList<Items>) {
-
-        for (dish in platListFromApi){
-            Log.d("TAG_Plat_", "updateDishes: " + dish)
-        }
-
         list = platListFromApi
         platList = platListFromApi
         notifyDataSetChanged()
