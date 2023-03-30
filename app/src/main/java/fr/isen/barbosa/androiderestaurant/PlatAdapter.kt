@@ -9,9 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import fr.isen.barbosa.androiderestaurant.model.Items
+import com.squareup.picasso.Picasso
 
 
-class PlatAdapter(private var platList: ArrayList<Items>, val onClickListener: (String) -> Unit) :
+class PlatAdapter(private var platList: ArrayList<Items>, val onClickListener: (Items) -> Unit) :
     RecyclerView.Adapter<PlatAdapter.PlatViewHolder>() {
 
     private var list = arrayListOf<Items>()
@@ -20,13 +21,6 @@ class PlatAdapter(private var platList: ArrayList<Items>, val onClickListener: (
         val dishTitle: TextView = itemView.findViewById(R.id.dishTitle)
         val image: ImageView = itemView.findViewById(R.id.image_meal)
         val dishPrice: TextView = itemView.findViewById(R.id.dishPrice)
-        fun bind(plat: String) {
-            itemView.setOnClickListener {
-                onClickListener(plat)
-            }
-            //val dishName = view.findViewById<TextView>(R.id.dishName)
-            //itemView.findViewById<TextView>(R.id.NomPlat).text = plat
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlatViewHolder {
@@ -41,12 +35,18 @@ class PlatAdapter(private var platList: ArrayList<Items>, val onClickListener: (
     }
 
     override fun onBindViewHolder(holder: PlatViewHolder, position: Int) { //PlatViewHolder = CategoryViewHolder
-        Log.d("TAG_", "onBindViewHolder: " + platList)
         val item = platList[position]
         holder.dishTitle.text = item.nameFr ?: ""
         holder.dishPrice.text = item.prices[0].price ?:""
-        Log.d("TAG_", "onBindViewHolder: " + item.images)
-        //holder.image.
+        if (item.images[0].isNotEmpty()){
+            Picasso.get().load(platList[position].images[0])
+                .placeholder(R.drawable.ic_launcher_background)
+                .into(holder.image)
+        }
+        holder.itemView.setOnClickListener {
+            onClickListener(item)
+        }
+
     }
 
 
