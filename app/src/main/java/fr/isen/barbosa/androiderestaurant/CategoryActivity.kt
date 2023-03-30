@@ -13,6 +13,7 @@ import com.google.gson.Gson
 import fr.isen.barbosa.androiderestaurant.databinding.ActivityCategoryBinding
 import org.json.JSONObject
 import fr.isen.barbosa.androiderestaurant.model.DataResult
+import fr.isen.barbosa.androiderestaurant.model.Items
 
 
 class CategoryActivity : AppCompatActivity() {
@@ -26,15 +27,18 @@ class CategoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         category = intent.getStringExtra("category")?:""
         binding.CategoryTitle.text = category
              //faire des if pour associer les listes aux diff entrées plats dessert
         //this.title = categoryName
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        val platList = resources.getStringArray(R.array.liste_plats).toList() as ArrayList
+        //val platList = resources.getStringArray(R.array.liste_plats).toList() as ArrayList<Items>
+        val platList = arrayListOf<Items>()
         val platRecyclerView = findViewById<RecyclerView>(R.id.ListePlats)
+
         platRecyclerView.layoutManager = LinearLayoutManager(this)
         platRecyclerView.adapter = PlatAdapter(platList){  //platList = dishes
             val intent = Intent(this, DetailActivity::class.java)
@@ -61,7 +65,7 @@ class CategoryActivity : AppCompatActivity() {
         val request = JsonObjectRequest(Request.Method.POST, url, body,
             {
                 Log.d("CategoryActivity", "ça marche : $it")
-                handleAPIData(it.toString())
+                serverAPI(it.toString())
             },
             {
                 Log.e("CategoryActivity", "ça marche pas")
@@ -72,15 +76,30 @@ class CategoryActivity : AppCompatActivity() {
 
     }
 
-    private fun handleAPIData(data: String) {
+    private fun serverAPI(data: String) {
+        // Mise en forme des data
         val dishesResult = Gson().fromJson(data, DataResult::class.java) //data
         val dishCategory = dishesResult.data.firstOrNull { it.nameFr == category } //platList
+
+        // Create adapter to populate recyclerview
         val adapter = binding.ListePlats.adapter as PlatAdapter //categoryList = ListePlats
-        //adapter.updateDishes(dishCategory?.items?.map { it.nameFr?:""} as ArrayList<String>)
-        dishCategory?.items?.let { items ->
-            val names = items.map { it.nameFr ?: "" }.toMutableList()
-            adapter.updateDishes(names)
+        Log.d("TAG_", "serveurAPI: " + dishesResult)
+        Log.d("TAG_", "serveurAPI: " + dishCategory)
+
+        for (dishCat in dishesResult.data){
+            Log.d("TAG_Cat", "serverAPI: " + dishCat)
+            for (dish in dishCat.items){
+                Log.d("TAG_Plat", "serverAPI: " + dish)
+            }
         }
-    }
+
+        adapter.updateDishes(dishCategory?.items as ArrayList<Items>)
+
+        //adapter.updateDishes(dishCategory?.items?.map { it.nameFr?:""} as ArrayList<Items>)
+        //dishCategory?.items?.let { items ->
+            //val names = items.map { it.nameFr ?: "" }.toMutableList()
+            //adapter.updateDishes(names)
+        }
+
 
 }

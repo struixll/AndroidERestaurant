@@ -7,7 +7,7 @@ import fr.isen.barbosa.androiderestaurant.databinding.ActivityDetailBinding
 import fr.isen.barbosa.androiderestaurant.model.Items
 
 
-
+@Suppress("DEPRECATION")
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var item: Items
@@ -15,12 +15,13 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding = ActivityDetailBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
-
         item = intent.getSerializableExtra("detail") as Items
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        //Récupération du nom du plat
         val title = item.nameFr
         supportActionBar?.title=title
         //val ingredients = item.ingredients ?:""
