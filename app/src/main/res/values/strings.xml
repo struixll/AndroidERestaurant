@@ -6,6 +6,7 @@
     <string name="lessButtton">-</string>
     <string name="Null">0</string>
     <string name="ingredients">ingredients</string>
+    <string name="price">€</string>
     <string-array name="liste_plats">
         <item>Pizza</item>
         <item>Burger</item>
