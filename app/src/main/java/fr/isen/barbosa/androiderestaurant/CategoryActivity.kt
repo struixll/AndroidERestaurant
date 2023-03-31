@@ -32,10 +32,7 @@ class CategoryActivity : AppCompatActivity() {
 
         category = intent.getStringExtra("category")?:""
         binding.CategoryTitle.text = category
-             //faire des if pour associer les listes aux diff entrées plats dessert
-        //this.title = categoryName
 
-        //val platList = resources.getStringArray(R.array.liste_plats).toList() as ArrayList<Items>
         val platList = arrayListOf<Items>()
         val platRecyclerView = findViewById<RecyclerView>(R.id.ListePlats)
 
@@ -45,7 +42,6 @@ class CategoryActivity : AppCompatActivity() {
             intent.putExtra("detail", it)
             startActivity(intent)
         }
-
         getDishFromServer() //appelle la fonction pour faire le lien avec le serveur
 
     }
@@ -79,27 +75,15 @@ class CategoryActivity : AppCompatActivity() {
     private fun serverAPI(data: String) {
         // Mise en forme des data
         val dishesResult = Gson().fromJson(data, DataResult::class.java) //data
-        val dishCategory = dishesResult.data.firstOrNull { it.nameFr == category } //platList
+        val dishCategory = dishesResult.data.firstOrNull { it.nameFr == category }
 
         // Create adapter to populate recyclerview
-        val adapter = binding.ListePlats.adapter as PlatAdapter //categoryList = ListePlats
-        Log.d("TAG_", "serveurAPI: " + dishesResult)
-        Log.d("TAG_", "serveurAPI: " + dishCategory)
-
+        val adapter = binding.ListePlats.adapter as PlatAdapter
         for (dishCat in dishesResult.data){
-            Log.d("TAG_Cat", "serverAPI: " + dishCat)
             for (dish in dishCat.items){
-                Log.d("TAG_Plat", "serverAPI: " + dish)
             }
         }
 
-        adapter.updateDishes(dishCategory?.items as ArrayList<Items>)
-
-        //adapter.updateDishes(dishCategory?.items?.map { it.nameFr?:""} as ArrayList<Items>)
-        //dishCategory?.items?.let { items ->
-            //val names = items.map { it.nameFr ?: "" }.toMutableList()
-            //adapter.updateDishes(names)
-        }
-
+        adapter.updateDishes(dishCategory?.items as ArrayList<Items>) }
 
 }

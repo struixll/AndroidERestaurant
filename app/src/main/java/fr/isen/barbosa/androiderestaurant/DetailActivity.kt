@@ -43,6 +43,7 @@ class DetailActivity : AppCompatActivity() {
             }
             binding.ingredients.text = ingredientsString
 
+            //faire l'addition pour les plats
             binding.plusButton.setOnClickListener {
                 compteur++
                 binding.quantity.text = Editable.Factory.getInstance().newEditable(compteur.toString())
@@ -50,6 +51,7 @@ class DetailActivity : AppCompatActivity() {
                 binding.addition.text = addition.toString()
             }
 
+            //faire la soustraction
             binding.lessButton.setOnClickListener {
                 compteur--
                 binding.quantity.text = Editable.Factory.getInstance().newEditable(compteur.toString())
