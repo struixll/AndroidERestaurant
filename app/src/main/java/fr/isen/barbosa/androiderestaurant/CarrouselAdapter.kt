@@ -16,7 +16,7 @@ internal class CarrouselAdapter (private val mContext: Context, private  val ite
         val view = layoutInflater!!.inflate(R.layout.activity_carrousel_adapter, container, false)
 
         if(itemList[position] == ""){
-            itemList[position]="a"
+            itemList[position]=""
         }
 
         val imageview: ImageView = view.findViewById(R.id.imageCarrousel)
