@@ -27,7 +27,6 @@ internal class CarrouselAdapter (private val mContext: Context, private  val ite
             .fit()
             .into(imageview)
 
-
         container.addView(view, position)
         return view
     }
